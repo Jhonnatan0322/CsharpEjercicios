@@ -1,17 +1,14 @@
-﻿
+﻿async Task<string> SimularConsultaBD(string tabla)
+{
+    await Task.Delay(2000);
+    return $"Datos de {tabla} listos";
+}
 
-
-    async Task<string> SimularConsultaBD(string tabla)
-    {
-        await Task.Delay(2000);
-        return $"Datos de {tabla} listos";
-    }
-
-    async Task<string> SimularConsultaAPI(string endpoint)
-    {
-        await Task.Delay(1000);
-        return $"Respuesta de {endpoint} recibida";
-    }
+async Task<string> SimularConsultaAPI(string endpoint)
+{
+    await Task.Delay(1000);
+    return $"Respuesta de {endpoint} recibida";
+}
 
 /*     string resultado = await SimularConsultaBD("SIVA");
     Console.WriteLine(resultado);
