@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 public class BibliotecaServicio: IBiblioteca
 {
     private List<Libro> _libros = new List<Libro>();
@@ -69,4 +71,39 @@ public class BibliotecaServicio: IBiblioteca
         var prestamosActivos = _prestamos.Where(p => p.Activo);
         return prestamosActivos.ToList();
     }
+
+    public void GuardarDatos(string ruta)
+    {
+        // serializa _libros, _usuarios y _prestamos a JSON
+        string JsonLibros = JsonSerializer.Serialize(_libros);
+        File.WriteAllText(ruta+"/libros.json",JsonLibros);
+        string JsonPrestamos = JsonSerializer.Serialize(_prestamos);
+        File.WriteAllText(ruta+"/prestamos.json",JsonPrestamos);
+        string JsonUsuarios = JsonSerializer.Serialize(_usuarios);
+        File.WriteAllText(ruta+"/usuarios.json",JsonUsuarios);
+        
+    }
+
+    public void CargarDatos(string ruta)
+    {
+            // ✅ verifica primero
+            if (File.Exists(ruta + "/libros.json"))
+            {
+                string JsonLibros = File.ReadAllText(ruta + "/libros.json");
+                _libros = JsonSerializer.Deserialize<List<Libro>>(JsonLibros);
+            }
+            if (File.Exists(ruta+"/prestamos.json"))
+            {
+                string JsonPrestamos = File.ReadAllText(ruta + "/prestamos.json");
+                _prestamos = JsonSerializer.Deserialize<List<Prestamo>>(JsonPrestamos);
+            }
+            if (File.Exists(ruta+"/usuarios.json"))
+            {
+                string JsonUsuarios = File.ReadAllText(ruta+"/usuarios.json");
+                _usuarios = JsonSerializer.Deserialize<List<Usuario>>(JsonUsuarios);
+            }
+
+    }
+
+
 }

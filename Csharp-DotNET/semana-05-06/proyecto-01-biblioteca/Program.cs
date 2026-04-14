@@ -1,6 +1,10 @@
 ﻿BibliotecaServicio servicio = new BibliotecaServicio();
 bool continuar = true;
 
+string rutaDatos = "datos";
+Directory.CreateDirectory(rutaDatos);
+servicio.CargarDatos(rutaDatos);
+
 while (continuar)
 {
     Console.WriteLine("\n=== BIBLIOTECA ===");
@@ -61,8 +65,11 @@ while (continuar)
             break;
         case "4":
             // pedir libroId, devolver
-            System.Console.WriteLine("Ingresar id del libro a devolver:");
-            int idLibrod = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out int idLibrod))
+            {
+                Console.WriteLine("Ingresa un número válido");
+                break;
+            }
 
             servicio.DevolverLibro(idLibrod);
             break;
@@ -99,6 +106,7 @@ while (continuar)
             
             break;
         case "0":
+            servicio.GuardarDatos(rutaDatos);
             continuar = false;
             break;
         default:
